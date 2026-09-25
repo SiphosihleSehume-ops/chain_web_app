@@ -45,7 +45,8 @@ async function connect() {
         } catch (error) {
             // handling potential errors
             console.error("Failed to connect: ", error);
-            connectButton.innerHTML = "Connection Failed";
+            // connectButton.innerHTML = "Connection Failed";
+            window.location.href = "wallet-conn-error.html";
         }
 
     } else {
