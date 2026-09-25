@@ -1,9 +1,9 @@
 // Playing around with the button
-// const button = document.getElementById("btn");
+const button = document.getElementById("btn");
 
-// button.addEventListener("click", () => {
-//     window.location.href = "registration.html";
-// });
+button.addEventListener("click", () => {
+    window.location.href = "registration.html";
+});
 
 // const backButton = document.getElementById("bck");
 
@@ -15,7 +15,7 @@
 
 import { createWalletClient, custom } from "https://esm.sh/viem";
 
-const connectButton = document.getElementById("btn");
+const connectButton = document.getElementById("btn2");
 
 // Variable to hold the wallet client instance
 let walletClient;
