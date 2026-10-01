@@ -1,0 +1,5 @@
+{
+  "@chainlink/contracts@1.5.0/src/v0.8/shared/interfaces/AggregatorV3Interface.sol": ".deps/npm/@chainlink/contracts@1.5.0/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
+  "contracts@0.4.0/PriceConverter.sol": ".deps/npm/contracts@0.4.0/PriceConverter.sol",
+  "https://raw.githubusercontent.com/smartcontractkit/chainlink-brownie-contracts/main/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol": ".deps/github/smartcontractkit/chainlink-brownie-contracts@main/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol"
+}
