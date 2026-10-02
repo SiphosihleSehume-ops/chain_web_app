@@ -2,6 +2,7 @@
 const button = document.getElementById("btn");
 const fundButton = document.getElementById("fundButton");
 const ethAmountInput = document.getElementById("ethAmount");
+// const balanceButton = document.getElementById("balanceButton");
 
 button.addEventListener("click", () => {
     window.location.href = "registration.html";
@@ -62,5 +63,29 @@ connectButton.onclick = connect;
 
 // Logic for handeling the funding of our smart contract
 async function fund() {
-    // logic coming soon
+    const ethAmount = ethAmountInput.value; // grab value from input field
+    console.log(`Funding with ${ethAmount}...`)
+
+        // Ensure wallet is connected and client is initialized
+    if (typeof window.ethereum !== "undefined") {
+        // Re-initialize or confirm walletClient
+        // Note: We assume 'walletClient' is declared globally (e.g., 'let walletClient;')
+        walletClient = createWalletClient({
+            transport: custom(window.ethereum),
+        });
+        // Request account access (important step!)
+        const [address] = await walletClient.requestAddresses();
+        console.log("Wallet connected, Account:", address);
+​
+        // Now we can proceed with transaction logic...
+​
+    } else {
+        // Handle the case where MetaMask (or other provider) is not installed
+        console.log("Please install MetaMask!");
+        // Consider disabling the button or updating its text here
+        // e.g., fundButton.innerHTML = "Please Install MetaMask";
+    }
 }
+
+fundButton.onclick = fund;
+// balanceButton.onclick = getBalance; // Will add later
