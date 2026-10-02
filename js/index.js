@@ -1,5 +1,7 @@
 // Playing around with the button
 const button = document.getElementById("btn");
+const fundButton = document.getElementById("fundButton");
+const ethAmountInput = document.getElementById("ethAmount");
 
 button.addEventListener("click", () => {
     window.location.href = "registration.html";
@@ -57,3 +59,8 @@ async function connect() {
 
 // Attatch connect function top the button's click event 
 connectButton.onclick = connect;
+
+// Logic for handeling the funding of our smart contract
+async function fund() {
+    // logic coming soon
+}
