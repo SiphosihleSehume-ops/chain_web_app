@@ -109,6 +109,20 @@ async function fund() {
     abi: coffeeAbi,         // Provides the contract interface definition
     // ... other parameters ...
     });
+
+    // Fetch the connected accounts
+    const accounts = await walletClient.requestAddresses();
+    // Use array destructuring to get the first account
+    const [connectedAccount] = accounts;
+
+    // ... later in the simulateContract call ...
+
+    await publicClient.simulateContract({
+    // ... other parameters ...
+    account: connectedAccount, // The account context for the simulation
+    functionName: "fund",     // Specify the contract function to simulate
+    // ... other parameters ...
+    });
 }
 
 fundButton.onclick = fund;
