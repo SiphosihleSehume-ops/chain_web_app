@@ -45,10 +45,33 @@ async function connect() {
             window.location.href = "wallet-conn-error.html";
         }
 
+        // Extractiing contract's address and abi
+        try {
+            // We need to define contractAddress and contractAbi first!
+            // We also need to parse ethAmount into Wei (e.g., using viem's parseEther)
+        ​
+            console.log("Attempting simulation...");
+            const simulationResult = await publicClient.simulateContract({
+                address: undefined, // TODO: Add deployed contract address
+                abi: undefined,     // TODO: Add contract ABI
+                functionName: 'fund',
+                account: address,   // Use the address obtained from requestAddresses
+                value: undefined,   // TODO: Add parsed ETH amount in Wei
+            });
+        ​
+            console.log("Simulation successful:", simulationResult);
+            // If simulation succeeds, simulationResult.request contains the prepared transaction details
+            // We can then pass this to walletClient.writeContract() to send the actual transaction
+        ​
+        } catch (error) {
+            console.error("Simulation failed:", error);
+            // Handle simulation errors appropriately (e.g., display message to user)
+        }
+
     } else {
         // Update UI if MetaMusk is not detected
         connectButton.innerHTML = "Please install MetaMusk!";
-    }
+    }   
 }
 
 // Attatch connect function top the button's click event 
