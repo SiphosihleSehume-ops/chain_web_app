@@ -1,4 +1,4 @@
-import { createWalletClient, custom, createPublicClient } from "https://esm.sh/viem";
+import { createWalletClient, custom, createPublicClient, defineChain, parseEther } from "https://esm.sh/viem";
 import { contractAddress, coffeeAbi } from "./constants-js.js";
 
 // Playing around with the button
@@ -127,3 +127,27 @@ async function fund() {
 
 fundButton.onclick = fund;
 // balanceButton.onclick = getBalance; // Will add later
+
+// Helper unction or identiying/ deining a speciic chain
+async function getCurrentChain(client) {
+  // Get the chain ID from the connected wallet client
+  const chainId = await client.getChainId();
+
+  // Define the chain parameters using viem's defineChain
+  const currentChain = defineChain({
+    id: chainId,
+    name: "Local Devnet", // Provide a descriptive name (e.g., Anvil, Hardhat)
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: {
+      // Use the RPC URL of your local node
+      default: { http: ["http://localhost:8545"] },
+      // public: { http: ["http://localhost:8545"] }, // Optional: specify public RPC if different
+    },
+    // Add other chain-specific details if needed (e.g., blockExplorers)
+  });
+  return currentChain;
+}
