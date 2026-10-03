@@ -49,7 +49,7 @@ async function connect() {
         try {
             // We need to define contractAddress and contractAbi first!
             // We also need to parse ethAmount into Wei (e.g., using viem's parseEther)
-        ​
+        
             console.log("Attempting simulation...");
             const simulationResult = await publicClient.simulateContract({
                 address: undefined, // TODO: Add deployed contract address
@@ -58,11 +58,11 @@ async function connect() {
                 account: address,   // Use the address obtained from requestAddresses
                 value: undefined,   // TODO: Add parsed ETH amount in Wei
             });
-        ​
+        
             console.log("Simulation successful:", simulationResult);
             // If simulation succeeds, simulationResult.request contains the prepared transaction details
             // We can then pass this to walletClient.writeContract() to send the actual transaction
-        ​
+        
         } catch (error) {
             console.error("Simulation failed:", error);
             // Handle simulation errors appropriately (e.g., display message to user)
@@ -92,9 +92,9 @@ async function fund() {
         // Request account access (important step!)
         const [address] = await walletClient.requestAddresses();
         console.log("Wallet connected, Account:", address);
-​
+
         // Now we can proceed with transaction logic...
-​
+
     } else {
         // Handle the case where MetaMask (or other provider) is not installed
         console.log("Please install MetaMask!");
