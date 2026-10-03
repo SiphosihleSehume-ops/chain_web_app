@@ -1,4 +1,5 @@
 import { createWalletClient, custom, createPublicClient } from "https://esm.sh/viem";
+import { contractAddress, coffeeAbi } from "./constants-js.js";
 
 // Playing around with the button
 const button = document.getElementById("btn");
@@ -101,6 +102,13 @@ async function fund() {
         // Consider disabling the button or updating its text here
         // e.g., fundButton.innerHTML = "Please Install MetaMask";
     }
+
+    // Contract interaction Promise
+    await publicClient.simulateContract({
+    address: contractAddress, // Specifies which contract to simulate on
+    abi: coffeeAbi,         // Provides the contract interface definition
+    // ... other parameters ...
+    });
 }
 
 fundButton.onclick = fund;
