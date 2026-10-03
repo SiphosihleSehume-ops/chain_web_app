@@ -1,27 +1,20 @@
+import { createWalletClient, custom, createPublicClient } from "https://esm.sh/viem";
+
 // Playing around with the button
 const button = document.getElementById("btn");
 const fundButton = document.getElementById("fundButton");
 const ethAmountInput = document.getElementById("ethAmount");
 // const balanceButton = document.getElementById("balanceButton");
 
+let publicClient; // New global variable
+// Variable to hold the wallet client instance
+let walletClient;
+
 button.addEventListener("click", () => {
     window.location.href = "registration.html";
 });
 
-// const backButton = document.getElementById("bck");
-
-// backButton.addEventListener("click", () => {
-//     window.history.back();
-// })
-
-// Ethereum wallet begins
-
-import { createWalletClient, custom } from "https://esm.sh/viem";
-
 const connectButton = document.getElementById("btn2");
-
-// Variable to hold the wallet client instance
-let walletClient;
 
 async function connect() {
     // inspect if Metamusk provider (window.ethereum) is available
