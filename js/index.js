@@ -5,7 +5,7 @@ import { contractAddress, coffeeAbi } from "./constants-js.js";
 const button = document.getElementById("btn");
 const fundButton = document.getElementById("fundButton");
 const ethAmountInput = document.getElementById("ethAmount");
-// const balanceButton = document.getElementById("balanceButton");
+const balanceButton = document.getElementById("balanceButton");
 
 let publicClient; // New global variable
 // Variable to hold the wallet client instance
@@ -14,6 +14,8 @@ let walletClient;
 button.addEventListener("click", () => {
     window.location.href = "registration.html";
 });
+
+balanceButton.onclick = getBalance;
 
 const connectButton = document.getElementById("btn2");
 
@@ -125,7 +127,7 @@ async function fund() {
     chain: currentChain, // Pass the defined chain object for network context
     // ... other parameters ...
     });
-    
+
     await publicClient.simulateContract({
     // ... other parameters ...
     value: parseEther(ethAmount), // Convert the Ether string to Wei BigInt
@@ -157,4 +159,39 @@ async function getCurrentChain(client) {
     // Add other chain-specific details if needed (e.g., blockExplorers)
   });
   return currentChain;
+}
+
+async function getBalance() {
+    // Check if a browser Ethereum provider (like MetaMask) is available
+    if (typeof window.ethereum !== "undefined") {
+        // Create a Public Client using viem
+        // This client is used for read-only interactions
+        const publicClient = createPublicClient({
+            // Connects viem to the browser's Ethereum provider (e.g., MetaMask)
+            transport: custom(window.ethereum)
+        });
+        
+        try {
+            // Use the publicClient to fetch the balance of the specified address
+            const balance = await publicClient.getBalance({
+                address: contractAddress // The address of the smart contract
+            });
+
+            // The balance is returned in Wei as a BigInt
+            // Format it into Ether for user-friendly display
+            const formattedBalance = formatEther(balance);
+
+            // Log the formatted balance to the console
+            console.log(`Contract Balance: ${formattedBalance} ETH`);
+            // You could update a UI element here instead of logging
+
+        } catch (error) {
+            // Handle potential errors during the asynchronous call
+            console.error("Error getting balance:", error);
+        }
+    } else {
+        // Inform the user if MetaMask or another provider isn't installed
+        console.log("Please install MetaMask!");
+        // Update the UI to prompt installation if desired
+    }
 }
