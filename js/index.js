@@ -23,14 +23,11 @@ async function connect() {
         console.log("MetaMask is installed!");
 
         try {
-            // create a Wallet Client using viem's custom transport
-            // this configures viem to use MetaMask's injected provider
+            // Enable viem to inject Metamask
             walletClient = createWalletClient({
                 transport: custom(window.ethereum),
             });
 
-            // request access to the user's account 
-            // triggers MetaMusk conn prompt if not already authorized
             await walletClient.requestAddresses();
             
             // update trhe UI to indicate a successful connection
@@ -48,9 +45,6 @@ async function connect() {
 
         // Extractiing contract's address and abi
         try {
-            // We need to define contractAddress and contractAbi first!
-            // We also need to parse ethAmount into Wei (e.g., using viem's parseEther)
-        
             console.log("Attempting simulation...");
             const simulationResult = await publicClient.simulateContract({
                 address: undefined, // TODO: Add deployed contract address
@@ -60,13 +54,10 @@ async function connect() {
                 value: undefined,   // TODO: Add parsed ETH amount in Wei
             });
         
-            console.log("Simulation successful:", simulationResult);
-            // If simulation succeeds, simulationResult.request contains the prepared transaction details
-            // We can then pass this to walletClient.writeContract() to send the actual transaction
+            // console.log("Simulation successful:", simulationResult);
         
         } catch (error) {
             console.error("Simulation failed:", error);
-            // Handle simulation errors appropriately (e.g., display message to user)
         }
 
     } else {
@@ -86,7 +77,6 @@ async function fund() {
         // Ensure wallet is connected and client is initialized
     if (typeof window.ethereum !== "undefined") {
         // Re-initialize or confirm walletClient
-        // Note: We assume 'walletClient' is declared globally (e.g., 'let walletClient;')
         walletClient = createWalletClient({
             transport: custom(window.ethereum),
         });
@@ -135,15 +125,7 @@ async function fund() {
     chain: currentChain, // Pass the defined chain object for network context
     // ... other parameters ...
     });
-
-    // Assume ethAmountInput is your HTML input element for the ETH amount
-
-    // You can verify the conversion (optional):
-    // console.log(`Converting ${ethAmount} ETH to Wei:`, parseEther(ethAmount));
-    // Inputting "1" would log: 1000000000000000000n
-
-    // ... later in the simulateContract call ...
-
+    
     await publicClient.simulateContract({
     // ... other parameters ...
     value: parseEther(ethAmount), // Convert the Ether string to Wei BigInt
