@@ -123,6 +123,18 @@ async function fund() {
     functionName: "fund",     // Specify the contract function to simulate
     // ... other parameters ...
     });
+
+    // Helper unction call
+    // Get the defined chain object using the walletClient
+    const currentChain = await getCurrentChain(walletClient);
+
+    // ... later in the simulateContract call ...
+
+    await publicClient.simulateContract({
+    // ... other parameters ...
+    chain: currentChain, // Pass the defined chain object for network context
+    // ... other parameters ...
+    });
 }
 
 fundButton.onclick = fund;
