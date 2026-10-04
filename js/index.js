@@ -6,6 +6,7 @@ const button = document.getElementById("btn");
 const fundButton = document.getElementById("fundButton");
 const ethAmountInput = document.getElementById("ethAmount");
 const balanceButton = document.getElementById("balanceButton");
+const withdrawButton = document.getElementById("withdrawButton");
 
 let publicClient; // New global variable
 // Variable to hold the wallet client instance
@@ -194,4 +195,9 @@ async function getBalance() {
         console.log("Please install MetaMask!");
         // Update the UI to prompt installation if desired
     }
+
 }
+
+// Withdraw function
+
+withdrawButton.onclick = withdraw;
