@@ -124,7 +124,7 @@ async function fund() {
     // ... other parameters ...
     });
 
-    // Helper unction call
+    // Helper function call
     // Get the defined chain object using the walletClient
     const currentChain = await getCurrentChain(walletClient);
 
@@ -134,6 +134,19 @@ async function fund() {
     // ... other parameters ...
     chain: currentChain, // Pass the defined chain object for network context
     // ... other parameters ...
+    });
+
+    // Assume ethAmountInput is your HTML input element for the ETH amount
+
+    // You can verify the conversion (optional):
+    // console.log(`Converting ${ethAmount} ETH to Wei:`, parseEther(ethAmount));
+    // Inputting "1" would log: 1000000000000000000n
+
+    // ... later in the simulateContract call ...
+
+    await publicClient.simulateContract({
+    // ... other parameters ...
+    value: parseEther(ethAmount), // Convert the Ether string to Wei BigInt
     });
 }
 
