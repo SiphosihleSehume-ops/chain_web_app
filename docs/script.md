@@ -245,3 +245,250 @@ connect()
 
 ---
 
+# 8. Funding the Smart Contract
+
+The `fund()` function handles the process of sending ETH to the smart contract.
+
+It begins by retrieving the amount entered by the user:
+
+```javascript
+const ethAmount = ethAmountInput.value;
+```
+
+For example, if the user enters:
+
+```text
+0.1
+```
+
+then:
+
+```javascript
+ethAmount
+```
+
+contains:
+
+```text
+"0.1"
+```
+
+---
+
+# 9. Checking for MetaMask Before Funding
+
+Before attempting the transaction, the script checks whether a browser Ethereum provider exists:
+
+```javascript
+if (typeof window.ethereum !== "undefined") {
+```
+
+If MetaMask is available, the wallet client is initialized:
+
+```javascript
+walletClient = createWalletClient({
+    transport: custom(window.ethereum),
+});
+```
+
+The user's account is then requested:
+
+```javascript
+const [address] = await walletClient.requestAddresses();
+```
+
+The first connected account is stored in:
+
+```javascript
+address
+```
+
+---
+
+# 10. Smart Contract Configuration
+
+The smart contract address and ABI are imported from:
+
+```javascript
+./constants-js.js
+```
+
+The script expects this file to provide:
+
+```javascript
+contractAddress
+coffeeAbi
+```
+
+The contract address identifies the deployed contract.
+
+The ABI describes the contract's available functions and their parameters.
+
+For example:
+
+```javascript
+await publicClient.simulateContract({
+    address: contractAddress,
+    abi: coffeeAbi,
+    functionName: "fund",
+    account: connectedAccount,
+    ...
+});
+```
+
+---
+
+# 11. Transaction Simulation
+
+Before sending a transaction, the script uses:
+
+```javascript
+publicClient.simulateContract(...)
+```
+
+Simulation allows the application to check whether a contract call is likely to succeed before actually submitting the transaction.
+
+The simulation requires several pieces of information.
+
+### Contract address
+
+```javascript
+address: contractAddress
+```
+
+This identifies the smart contract.
+
+### ABI
+
+```javascript
+abi: coffeeAbi
+```
+
+This tells Viem how to interact with the contract.
+
+### Account
+
+```javascript
+account: connectedAccount
+```
+
+This specifies which wallet is attempting the transaction.
+
+### Function
+
+```javascript
+functionName: "fund"
+```
+
+This tells Viem that the contract's `fund()` function should be called.
+
+### ETH value
+
+```javascript
+value: parseEther(ethAmount)
+```
+
+This specifies how much ETH should accompany the transaction.
+
+---
+
+# 12. ETH and Wei
+
+Ethereum internally represents ETH amounts in **Wei**.
+
+The relationship is:
+
+```text
+1 ETH = 1,000,000,000,000,000,000 Wei
+```
+
+Therefore, if the user enters:
+
+```text
+0.1 ETH
+```
+
+the transaction must use:
+
+```text
+100000000000000000 Wei
+```
+
+Instead of performing this conversion manually, Viem provides:
+
+```javascript
+parseEther(ethAmount)
+```
+
+For example:
+
+```javascript
+parseEther("0.1")
+```
+
+returns the corresponding Wei value as a JavaScript `BigInt`.
+
+This is important because Ethereum transaction values require integer-based Wei amounts.
+
+---
+
+# 13. Retrieving the Current Blockchain
+
+The application contains a helper function called:
+
+```javascript
+getCurrentChain()
+```
+
+Its purpose is to determine which blockchain network the wallet is currently connected to.
+
+```javascript
+async function getCurrentChain(client) {
+    const chainId = await client.getChainId();
+
+    const currentChain = defineChain({
+        id: chainId,
+        name: "Local Devnet",
+        nativeCurrency: {
+            name: "Ether",
+            symbol: "ETH",
+            decimals: 18,
+        },
+        rpcUrls: {
+            default: {
+                http: ["http://localhost:8545"]
+            },
+        },
+    });
+
+    return currentChain;
+}
+```
+
+---
+
+# 14. Chain ID
+
+The following line obtains the network's chain ID:
+
+```javascript
+const chainId = await client.getChainId();
+```
+
+A chain ID uniquely identifies an Ethereum-compatible network.
+
+For example, a local development blockchain may use a chain ID configured by Anvil or another development framework.
+
+The returned chain ID is then used when defining the current chain.
+
+---
+
+# 15. Local Development Network
+
+The script defines the RPC endpoint as:
+
+```text
+http://localhost:8545
+```
+
+This indicates that the application is intended to communicate with a locally
