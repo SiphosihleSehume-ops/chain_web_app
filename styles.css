@@ -189,3 +189,21 @@ button {
 .error-container button:hover {
     background: #444;
 }
+
+/* Feedback messages shown under the buttons (see `setStatus` in js/index.js) */
+.status {
+    color: #444;
+    word-break: break-all;
+}
+
+.status.error {
+    color: #c0392b;
+    font-weight: 600;
+}
+
+#ethAmount {
+    padding: 10px 12px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
