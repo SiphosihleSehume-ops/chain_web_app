@@ -10,17 +10,27 @@
     <h1>Simple demo web application that connects to web3 wallet</h1>
     <div id="stuff">
         <p>Building blockchain-based applications is intricately fun!</p>
+        <p id="welcome"></p>
         <button id="btn">Register</button>
     </div>
     <button id="btn2">Connect</button>
-    <script src="js/index.js" type="module"></script>
+    <p id="account"></p>
+
     <button id="balanceButton">Get Balance</button>
+    <p id="balance"></p>
+    <p id="funded"></p>
+
     <div>
       <!-- Form - "buy coffee" or "fund" -->
       <label for="ethAmount">ETH Amount</label>
       <input id="ethAmount" placeholder="0.1" />
-      <button type="button" id="fundButton">Buy Coffee</button> 
-      <button id="withdraw">Withdraw</button> 
+      <button type="button" id="fundButton">Buy Coffee</button>
+      <button type="button" id="withdrawButton">Withdraw</button>
     </div>
+
+    <!-- Feedback for the user (simulation, confirmation, errors) -->
+    <p id="status" class="status"></p>
+
+    <script src="js/index.js" type="module"></script>
 </body>
 </html>
