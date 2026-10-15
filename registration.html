@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <script src="js/index.js" defer></script>
+    <script src="js/index.js" type="module"></script>
     <title>Account Registration</title>
 </head>
 <body>
     <h2>Registration</h2>
     <div class="register-container">
 
-        <form class="register-form" action="/register">
+        <form class="register-form" id="registerForm">
             <div class="input-group">
                 <label for="username">Username</label>
                 <input
@@ -38,6 +38,7 @@
                     type="password"
                     id="password"
                     name="password"
+                    minlength="8"
                     required
                 >
             </div>
