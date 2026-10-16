@@ -19,3 +19,15 @@ The front end is plain HTML, CSS and JavaScript (no bundler, no build step). Blo
 - Registration page (front-end only, see [Notes](#notes)) and a wallet-connection error page
 
 ---
+
+## Tech stack
+
+| Layer | Tools |
+|---|---|
+| Smart contracts | Solidity `^0.8.27`, Chainlink `AggregatorV3Interface` |
+| Front end | HTML, CSS, JavaScript (ES modules) |
+| Web3 library | Viem `2.21.0` (via `esm.sh`) |
+| Wallet | MetaMask (`window.ethereum`) |
+| Dev network | Local Anvil fork of Sepolia, or the Sepolia test network |
+
+---
