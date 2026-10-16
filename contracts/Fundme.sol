@@ -2,16 +2,16 @@
 
 pragma solidity ^0.8.27;
 
-import {AggregatorV3Interface} from
-    "https://github.com/smartcontractkit/chainlink-brownie-contracts/blob/main/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+// NB: Same npm import `PriceConverter.sol` uses (a GitHub URL import only works in Remix)
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 import {PriceConverter} from "./PriceConverter.sol";
-// NB: Gas fees effecient compared to `reverrt strings`
+// NB: Custom errors are more gas efficient compared to `revert strings`
 error NotOwner();
 
 contract FundMe {
 
-    // treat the functions from the `PriceConverter` library as if they were methds ona uint256 value # that
+    // treat the functions from the `PriceConverter` library as if they were methods on a uint256 value
     using PriceConverter for uint256;
 
     mapping(address => uint256) public addressToAmountFunded;
@@ -38,8 +38,8 @@ contract FundMe {
     }
 
     modifier onlyOwner() {
-        // require(msg.sender == owner); --> gas ineffecient
-        if (msg.sender != i_owner) revert NotOwner(); // gas effecient
+        // require(msg.sender == owner); --> gas inefficient
+        if (msg.sender != i_owner) revert NotOwner(); // gas efficient
         _;
     }
 
